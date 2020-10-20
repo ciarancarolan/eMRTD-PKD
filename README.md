@@ -1,7 +1,7 @@
 # eMRTD-PKD
 Examples of code for handling public key data and file formats associated with ICAO compliant travel documents
 
-Code is stored in the 'master' branch.
+Code is stored in the 'examples' branch.
 
 In order to use the code, you should have openssl in your path. Some versions of openssl are unable to handle certain ICAO-conformant files, including the ICAO master list. It is recommended that version 1.0.2 be used.
 
