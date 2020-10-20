@@ -8,8 +8,6 @@ eval $(openssl asn1parse -in $1 -inform der -i | \
        sed 's/^ *\([0-9]*\).*hl= *\([0-9]*\).*l= *\([0-9]*\).*/ \
 	     dd if=$1 bs=1 skip=\1 count=$((\2+\3)) 2>\/dev\/null | openssl x509 -inform der -out cert.\1.pem -outform pem;/')
 
-# rm ${CMS_MESSAGE}.der
-
 let count=0
 let countcountry=0
 echo " " > countrylist.txt
