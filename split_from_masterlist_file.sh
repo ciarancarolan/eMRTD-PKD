@@ -1,11 +1,20 @@
 #!/usr/bin/env zsh
 
+# Convert .ml file to .der file
+# Replace the openssl command below to point to the location of your openssl
+
+eval $(/usr/local/opt/openssl@1.0/bin/openssl cms -in $1 -inform der -verify -noverify -out $1.der -certsout signercerts.pem)
+
+rm signercerts.pem
+
 # Split ML into individual certificates
-eval $(openssl asn1parse -in $1 -inform der -i | \
+
+der_in=$1.der
+eval $(openssl asn1parse -in $der_in -inform der -i | \
        awk "/:d=1/{b=0}/:d=1.*SET/{b=1}/:d=2/&&b{print}" |\
        sed 's/^ *\([0-9]*\).*hl= *\([0-9]*\).*l= *\([0-9]*\).*/ \
-       dd if=$1 bs=1 skip=\1 count=$((\2+\3)) 2>\/dev\/null | openssl x509 -inform der -out cert.\1.pem -outform pem;/')
-
+       dd if=$der_in bs=1 skip=\1 count=$((\2+\3)) 2>\/dev\/null | openssl x509 -inform der -out cert.\1.pem -outform pem;/')
+#
 let count=0
 let countcountry=0
 echo " " > countrylist.txt
