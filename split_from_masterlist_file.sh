@@ -3,7 +3,7 @@
 # Convert .ml file to .der file
 # Replace the openssl command below to point to the location of your openssl
 
-eval $(/usr/local/opt/openssl@1.0/bin/openssl cms -in $1 -inform der -verify -noverify -out $1.der -certsout signercerts.pem)
+eval $(openssl cms -in $1 -inform der -verify -noverify -out $1.der -certsout signercerts.pem)
 
 rm signercerts.pem
 
